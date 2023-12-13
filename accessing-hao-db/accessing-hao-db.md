@@ -98,3 +98,61 @@ IDL> help, data[0]
 IDL> help, data.date_obs
 <Expression>    STRING    = Array[653]
 ```
+
+---
+
+# Example Python code, Part 1
+
+``` Python
+>>> import mysql
+>>> import mysql.connector
+
+>>> connection = mysql.connector.connect(host="databases.hao.ucar.edu",
+    user="mgalloy", password="MY_PASSWORD")
+>>> cursor = connection.cursor()
+
+>>> obsday_id = 9473
+>>> q = f"select * from MLSO.ucomp_file where obsday_id={obsday_id}"
+>>> cursor.execute(q)
+>>> rows = cursor.fetchall()
+```
+
+---
+
+# Example Python code, Part 2
+
+```
+>>> rows[0]
+(1472528,
+ datetime.datetime(2023, 12, 2, 16, 4, 16),
+ '20220901.175348.ucomp.530.l1.p3.fts',
+ '20220901.175348.48.ucomp.530.l0.fts',
+ datetime.datetime(2022, 9, 1, 17, 53, 48),
+ 9473,
+ 7.8967,
+ 2261,
+ 2,
+ 28,
+ 1,
+ 'all_wavelength_coronal.cbk',
+ '530_03wave_2beam_16sums_8rep_BOTH',
+ 0,
+ 16,
+ 0,
+ 0,
+ 0,
+ 0,
+ 11,
+ 32,
+ 11,
+ 33,
+ 139.4056,
+ 602.6799,
+ 7.0,
+ 121.0,
+ '530',
+ 3,
+ 56)
+>>> cursor.close()
+>>> connection.close()
+```
